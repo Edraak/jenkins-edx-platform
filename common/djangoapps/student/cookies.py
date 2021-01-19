@@ -13,6 +13,7 @@ from django.urls import NoReverseMatch, reverse
 from django.dispatch import Signal
 from django.utils.http import cookie_date
 
+from edraak_jwt.helpers import get_edraak_refresh_token
 from openedx.core.djangoapps.user_api.accounts.utils import retrieve_last_sitewide_block_completed
 from student.models import CourseEnrollment
 
@@ -120,6 +121,16 @@ def set_user_info_cookie(response, request):
         secure=user_info_cookie_is_secure,
         **cookie_settings
     )
+    if request.user.is_authenticated:
+        response.set_cookie(
+            'edraak_refresh_token'.encode('utf-8'),
+            get_edraak_refresh_token(
+                user=request.user,
+                session_key=request.session.session_key,
+            ),
+            secure=user_info_cookie_is_secure,
+            **cookie_settings
+        )
 
 
 def set_experiments_is_enterprise_cookie(request, response, experiments_is_enterprise):

@@ -605,6 +605,12 @@ COUNTRIES_FIRST = []  # Turned off here to pass edx tests
 
 FEATURES['ENABLE_EDRAAK_LOGISTRATION'] = False  # Disabled in tests by default
 
+EDRAAK_JWT_SETTINGS = {
+    'EXPIRATION_SECONDS': 60 * 3,
+    'SECRET_KEY': 'this is a bad secret'
+}
+INSTALLED_APPS += ('edraak_jwt',)
+
 COURSE_CATALOG_API_URL = 'https://catalog.example.com/api/v1'
 
 COMPREHENSIVE_THEME_DIRS = [REPO_ROOT / "themes", REPO_ROOT / "common/test"]

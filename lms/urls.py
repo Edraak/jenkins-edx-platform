@@ -1110,3 +1110,8 @@ if settings.FEATURES.get('ENABLE_API_DOCS'):
     ]
 
 urlpatterns.extend(plugin_urls.get_patterns(plugin_constants.ProjectType.LMS))
+
+from edraak_jwt.views import EdrrakAccessTokenView
+urlpatterns += [
+        url(r'^edraak_access_token', EdrrakAccessTokenView.as_view(), name='edraak_access_token'),
+    ]
